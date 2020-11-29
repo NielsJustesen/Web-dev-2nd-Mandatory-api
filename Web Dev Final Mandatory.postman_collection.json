@@ -1,0 +1,578 @@
+{
+	"info": {
+		"_postman_id": "e6cc46ab-c140-4dd5-8cb1-f49de12526d1",
+		"name": "Web Dev Final Mandatory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tracks",
+			"item": [
+				{
+					"name": "Get by artist",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order\": \"artists\",\r\n    \"searchText\": \"AC/DC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/tracks?order=artist&name=Niels Justesen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "artist"
+								},
+								{
+									"key": "name",
+									"value": "Niels Justesen"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by album",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/tracks?order=album&name=Album For Testing!",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "album"
+								},
+								{
+									"key": "name",
+									"value": "Album For Testing!"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by composer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/tracks?order=composer&name=Niels Justesen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "composer"
+								},
+								{
+									"key": "name",
+									"value": "Niels Justesen"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Track",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Niels Song",
+									"type": "text"
+								},
+								{
+									"key": "albumId",
+									"value": "353",
+									"type": "text"
+								},
+								{
+									"key": "mediaType",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "genreId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "composer",
+									"value": "Jack Jones, Niels Justesen",
+									"type": "text"
+								},
+								{
+									"key": "milliseconds",
+									"value": "11000",
+									"type": "text"
+								},
+								{
+									"key": "bytes",
+									"value": "123000",
+									"type": "text"
+								},
+								{
+									"key": "unitPrice",
+									"value": "0.99",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/tracks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"tracks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Track",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sovsmachine!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/tracks/3507",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"tracks",
+								"3507"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Track",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/tracks/3520",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"tracks",
+								"3520"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Artists",
+			"item": [
+				{
+					"name": "Get by artist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/artists?name=Niels Justesen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"artists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Niels Justesen"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all artists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Artist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Niels Justesen",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/artists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Artist",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Niels Mærkedahl Justesen\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/artists/278",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"artists",
+								"278"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Artist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/artists/278",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"artists",
+								"278"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Albums",
+			"item": [
+				{
+					"name": "Get by artist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/albums?order=artist&name=Niels Mærkedahl Justesen",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"albums"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "artist"
+								},
+								{
+									"key": "name",
+									"value": "Niels Mærkedahl Justesen"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/albums?order=title&name=Album For Testing!",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"albums"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "title"
+								},
+								{
+									"key": "name",
+									"value": "Album For Testing!"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Album",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Album For Testing!",
+									"type": "text"
+								},
+								{
+									"key": "artistId",
+									"value": "278",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Album",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"New Test Album 1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/albums/349",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"albums",
+								"349"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Album",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/albums/350",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"albums",
+								"350"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Invoice",
+			"item": [
+				{
+					"name": "Get Invoice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/invoices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"invoices"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Invoiceline",
+			"item": [
+				{
+					"name": "Get Invoiceline",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Chinook-Abridged-rest-api/invoicelines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Chinook-Abridged-rest-api",
+								"invoicelines"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
