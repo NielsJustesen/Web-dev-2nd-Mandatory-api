@@ -32,52 +32,51 @@
 
         }
 
-        function Login($data){
-            try {
-                $qeury =<<<'SQL'
-                    SELECT Email, Password FROM customer WHERE customerId = ?
-                SQL;
-
-                $stmt = $this->pdo->prepare($qeury);
-                $stmt->execute([$data['customerId']]);
-                $result = $stmt->fetch();
-
-                if(password_verify($data['enteredPassword'], $result['Password'])){
-                    return true;
-                }
-                else{
-                    return false;
-                }
-
-            } catch (\PDOException $e) {
-                return $e->getMessage();
-            }
-        }
+        
 
         
 
-        function Read(){
-            
+        function Read($email){
+
+            try {
+                $query =<<<'SQL'
+                    SELECT * FROM customer WHERE email = ?
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$email]);
+                $result = $stmt->fetch();
+                $this->disconnect();
+
+                return $result;
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
         }
 
         function Update($change, $data){
 
             switch ($change) {
                 case 'password':
+                    try {
+                        $qeury =<<<'SQL'
+                            UPDATE customer SET Password = ? WHERE CustomerId = ?
+                        SQL;
+                        $pwd = password_hash($data['password'], PASSWORD_DEFAULT);
+                        $stmt = $this->pdo->prepare($qeury);
+                        $stmt->execute([$pwd, $data['customerId']]);
+                        $result = $stmt->rowCount();
+                        
+                        if($result > 1){
+                            return 'password was not changed';
+                        }
+                        else{
+                            return 'password changed successfully';
+                        }
+                        $this->disconnect();
 
-                    $qeury =<<<'SQL'
-                        UPDATE customer SET Password = ? WHERE CustomerId = ?
-                    SQL;
-                    $pwd = password_hash($data['password'], PASSWORD_DEFAULT);
-                    $stmt = $this->pdo->prepare($qeury);
-                    $stmt->execute([$pwd, $data['customerId']]);
-                    $result = $stmt->rowCount();
-
-                    if($result > 1){
-                        return 'password was not changed';
-                    }
-                    else{
-                        return 'password changed successfully';
+                    } catch (\PDOException $e) {
+                        return $e->getMessage();
                     }
                     break;
                 

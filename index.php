@@ -203,8 +203,9 @@
                 switch ($verb) 
                 {
                     case 'GET':
-                        echo json_encode("13");
-                        
+                        if(isset($_GET['email'])){
+                            echo json_encode($customer->Read($_GET['email']));
+                        }
                         $customer = null;
                         break;
                         
