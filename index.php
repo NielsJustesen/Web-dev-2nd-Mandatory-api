@@ -10,6 +10,7 @@
     define('ENTITY_CUSTOMERS', 'customers');
     define('ENTITY_INVOICELINES', 'invoicelines');
     define('ENTITY_INVOICES', 'invoices');
+    define('ENTITY_LOGIN', 'login');
 
 
 
@@ -202,23 +203,37 @@
                 switch ($verb) 
                 {
                     case 'GET':
+                        echo json_encode("13");
                         
                         $customer = null;
                         break;
                         
 
                     case 'POST':
-                        
+                        echo json_encode("14");
+
+                        if(isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["password"]) && isset($_POST["company"]) && isset($_POST["address"]) && isset($_POST["city"]) && isset($_POST["state"]) && isset($_POST["country"]) && isset($_POST["postalCode"]) && isset($_POST["phone"]) && isset($_POST["fax"]) && isset($_POST["email"])){
+                            echo json_encode($customer->Create($_POST));
+                        }
+                        else {
+                            formatError();
+                        }
                         $customer = null;
                         break;
 
                     
                     case 'PUT':
-                        
+                        echo json_encode("15");
+                        $customerData = (array) json_decode(file_get_contents('php://input'), TRUE);
+                        if ((count($urlPieces) == 3) && isset($customerData['customerId']) && isset($customerData['password'])) {
+                            echo json_encode($customer->Update("password", $customerData));
+                        }
                         $customer = null;
                         break;
 
                     case 'DELETE':
+                        echo json_encode("16");
+
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -236,23 +251,31 @@
                 switch ($verb) 
                 {
                     case 'GET':
+                        echo json_encode("17");
                        
                         $invoice = null;
                         break;
                         
 
                     case 'POST':
-                        
+                        echo json_encode("18");
+                        if(isset($_POST['customerId']) && isset($_POST['billindAddress']) && isset($_POST['billingCity']) && isset($_POST['billingState']) && isset($_POST['billingCountry']) && isset($_POST['billingPostalCode']) && isset($_POST['total'])){
+                            echo json_encode("Hello");
+                            echo json_encode($invoice->Create($_POST));
+                        }
                         $invoice = null;
                         break;
 
                     
                     case 'PUT':
-                       
+                        echo json_encode("19");
+                        
                         $invoice = null;
                         break;
 
                     case 'DELETE':
+                        echo json_encode("20");
+
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -270,23 +293,31 @@
                 switch ($verb) 
                 {
                     case 'GET':
+                        echo json_encode("21");
                         
                         $invoiceline = null;
                         break;
                         
 
                     case 'POST':
-                        
+                        echo json_encode("22");
+
+                        if(isset($_POST['invoiceId']) && isset($_POST['quantity']) && isset($_POST['trackId']) && isset($_POST['unitPrice'])){
+                            echo json_encode($invoiceline->Create($_POST));
+                        }
                         $invoiceline = null;
                         break;
 
                     
                     case 'PUT':
+                        echo json_encode("23");
                         
                         $invoiceline = null;
                         break;
 
                     case 'DELETE':
+                        echo json_encode("24");
+
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -296,6 +327,20 @@
                         break;
                 }
 
+                break;
+
+            case ENTITY_LOGIN:
+                require_once("src/models/login.php");
+                $login = new Login();
+                $verb = $_SERVER['REQUEST_METHOD'];
+                switch($verb){
+                    case 'POST':
+                        if(isset($_POST['customerId']) && isset($_POST['email']) && isset($_POST['enteredPassword'])){
+                            echo json_encode($login->LoginCustomer($_POST));
+                        }
+                        $login = null;
+                        break;
+                }
                 break;
             default:
                 echo formatError();

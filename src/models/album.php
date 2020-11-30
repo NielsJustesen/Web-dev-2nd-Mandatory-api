@@ -115,6 +115,8 @@
 
         function Delete($id){
             try {
+                $this->pdo->beginTransaction();
+
                 $query =<<<'SQL'
                     DELETE FROM track WHERE AlbumId = ?
                 SQL;
@@ -130,6 +132,8 @@
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$id]);
                 $result = $stmt->rowCount();
+
+                $this->pdo->commit();
                 $this->disconnect();
                 if ($result > 0){
                     return ["Status: 200", "Album deleted"];
