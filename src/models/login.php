@@ -15,10 +15,10 @@
                 $stmt->execute([$data['customerId']]);
                 $result = $stmt->fetch();
                 if(password_verify($data['enteredPassword'], $result['Password'])){
-                    return true;
+                    return "true";
                 }
                 else{
-                    return false;
+                    return "false";
                 }
                
             } catch (\PDOException $e) {

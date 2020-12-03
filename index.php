@@ -44,8 +44,6 @@
                 switch ($verb) 
                 {
                     case 'GET':
-                        echo json_encode("1");
-
                         if (isset($_GET["order"]) && isset($_GET["name"])) {
                             echo json_encode($track->BrowseTracks($_GET["order"], $_GET["name"]));
                         }
@@ -56,8 +54,6 @@
                         break;
                     
                     case 'POST':
-                        echo json_encode("2");
-
                         if(isset($_POST["name"]) && isset($_POST["albumId"]) && isset($_POST["mediaType"]) && isset($_POST["genreId"]) && isset($_POST["composer"]) && isset($_POST["milliseconds"]) && isset($_POST["bytes"]) && isset($_POST["unitPrice"])) {
                             echo json_encode($track->Create($_POST["name"],
                                                             $_POST["albumId"],
@@ -72,8 +68,6 @@
                         break;
 
                     case 'PUT':
-                        echo json_encode("3");
-
                         $trackData = (array) json_decode(file_get_contents('php://input'), TRUE);
                         if ((count($urlPieces) == 4) && isset($trackData['name'])) {
                             echo json_encode($track->Update($urlPieces[ID], $trackData['name']));
@@ -82,8 +76,6 @@
                         break;
 
                     case 'DELETE':
-                        echo json_encode("4");
-
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -102,8 +94,6 @@
                 switch ($verb) 
                 {
                     case 'GET':
-                        echo json_encode("5");
-
                         if (isset($_GET["name"])) {
                             echo json_encode($artist->BrowseArtists($_GET["name"]));
                         }
@@ -115,8 +105,6 @@
                         break;
 
                     case 'POST':
-                        echo json_encode("6");
-
                         if(isset($_POST['name'])) {
                             echo json_encode($artist->Create($_POST['name']));
                         }
@@ -124,8 +112,6 @@
                         break;
 
                     case 'PUT':
-                        echo json_encode("7");
-
                         $artistData = (array) json_decode(file_get_contents('php://input'), TRUE);
                         if ((count($urlPieces) == 4) && isset($artistData['name'])) {
                             echo json_encode($artist->Update($urlPieces[ID], $artistData['name']));
@@ -134,8 +120,6 @@
                         break;
 
                     case 'DELETE':
-                        echo json_encode("8");
-
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -153,8 +137,6 @@
                 switch ($verb) 
                 {
                     case 'GET':
-                        echo json_encode("9");
-
                         if (isset($_GET["order"]) && isset($_GET['name'])) {
                             echo json_encode($album->BrowseAlbums($_GET["order"], $_GET["name"]));
                         }
@@ -165,8 +147,6 @@
                         break;
 
                     case 'POST':
-                        echo json_encode("10");
-
                         if (isset($_POST['title']) && isset($_POST['artistId'])) {
                             echo json_encode($album->Create($_POST['title'], $_POST['artistId']));
                         }
@@ -174,8 +154,6 @@
                         break;
                     
                     case 'PUT':
-                        echo json_encode("11");
-
                         $albumData = (array) json_decode(file_get_contents('php://input'), TRUE);
                         if ((count($urlPieces) == 4) && isset($albumData['title'])) {
                             echo json_encode($album->Update($urlPieces[ID], $albumData['title']));
@@ -184,8 +162,6 @@
                         break;
 
                     case 'DELETE':
-                        echo json_encode("12");
-
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -224,7 +200,6 @@
 
                     
                     case 'PUT':
-                        echo json_encode("15");
                         $customerData = (array) json_decode(file_get_contents('php://input'), TRUE);
                         if ((count($urlPieces) == 3) && isset($customerData['customerId']) && isset($customerData['password'])) {
                             echo json_encode($customer->Update("password", $customerData));
@@ -233,8 +208,6 @@
                         break;
 
                     case 'DELETE':
-                        echo json_encode("16");
-
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -252,8 +225,6 @@
                 switch ($verb) 
                 {
                     case 'GET':
-                        echo json_encode("17");
-                       
                         $invoice = null;
                         break;
                         
@@ -264,19 +235,14 @@
                             echo json_encode("Hello");
                             echo json_encode($invoice->Create($_POST));
                         }
-                        $invoice = null;
                         break;
 
                     
                     case 'PUT':
-                        echo json_encode("19");
-                        
                         $invoice = null;
                         break;
 
                     case 'DELETE':
-                        echo json_encode("20");
-
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {
@@ -294,15 +260,11 @@
                 switch ($verb) 
                 {
                     case 'GET':
-                        echo json_encode("21");
-                        
                         $invoiceline = null;
                         break;
                         
 
                     case 'POST':
-                        echo json_encode("22");
-
                         if(isset($_POST['invoiceId']) && isset($_POST['quantity']) && isset($_POST['trackId']) && isset($_POST['unitPrice'])){
                             echo json_encode($invoiceline->Create($_POST));
                         }
@@ -311,14 +273,10 @@
 
                     
                     case 'PUT':
-                        echo json_encode("23");
-                        
                         $invoiceline = null;
                         break;
 
                     case 'DELETE':
-                        echo json_encode("24");
-
                         if ($pieces < MAX_PIECES) {
                             echo formatError();
                         } else {

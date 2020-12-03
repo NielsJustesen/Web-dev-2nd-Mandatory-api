@@ -76,8 +76,9 @@
         function List(){
             try {
                 $query = <<<'SQL'
-                    SELECT title
+                    SELECT artist.Name, album.title
                     FROM album
+                    LEFT JOIN artist ON album.ArtistId = artist.ArtistId
                 SQL;
                 
                 $stmt = $this->pdo->prepare($query);

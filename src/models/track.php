@@ -90,7 +90,7 @@
 
                 case "artist":
                     $query = <<<'SQL'
-                        SELECT track.TrackId, track.Name, track.AlbumId, track.Composer, track.Milliseconds, track.UnitPrice
+                        SELECT track.TrackId, track.Name, track.AlbumId, track.Milliseconds, track.UnitPrice
                         FROM track
                         LEFT JOIN album
                         ON track.AlbumId = album.AlbumId
