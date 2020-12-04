@@ -76,7 +76,7 @@
         function List(){
             try {
                 $query = <<<'SQL'
-                    SELECT artist.Name, album.title
+                    SELECT artist.Name, album.Title
                     FROM album
                     LEFT JOIN artist ON album.ArtistId = artist.ArtistId
                 SQL;
