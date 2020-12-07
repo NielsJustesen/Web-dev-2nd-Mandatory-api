@@ -230,9 +230,7 @@
                         
 
                     case 'POST':
-                        echo json_encode("18");
                         if(isset($_POST['customerId']) && isset($_POST['billindAddress']) && isset($_POST['billingCity']) && isset($_POST['billingState']) && isset($_POST['billingCountry']) && isset($_POST['billingPostalCode']) && isset($_POST['total'])){
-                            echo json_encode("Hello");
                             echo json_encode($invoice->Create($_POST));
                         }
                         break;

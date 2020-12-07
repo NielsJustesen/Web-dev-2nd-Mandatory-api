@@ -78,7 +78,7 @@
                 $query = <<<'SQL'
                     SELECT artist.Name, album.Title
                     FROM album
-                    LEFT JOIN artist ON album.ArtistId = artist.ArtistId
+                    LEFT JOIN artist ON album.ArtistId = artist.ArtistId ORDER BY artist.Name
                 SQL;
                 
                 $stmt = $this->pdo->prepare($query);

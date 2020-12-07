@@ -42,7 +42,7 @@
                         FROM track
                         LEFT JOIN album
                         ON track.AlbumId = album.AlbumId 
-                        WHERE album.Title = ?;
+                        WHERE album.Title = ? ORDER BY track.Name;
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
@@ -58,7 +58,7 @@
                     $query = <<<'SQL'
                         SELECT track.TrackId, track.Name, track.AlbumId, track.Composer, track.Milliseconds, track.UnitPrice
                         FROM track
-                        WHERE Composer LIKE  ?;
+                        WHERE Composer LIKE  ? ORDER BY track.Name;
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
@@ -76,7 +76,7 @@
                         FROM track
                         LEFT JOIN genre
                         ON track.GenreId = genre.GenreID
-                        WHERE genre.Name = ?;
+                        WHERE genre.Name = ? ORDER BY track.Name;
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
@@ -96,7 +96,7 @@
                         ON track.AlbumId = album.AlbumId
                         LEFT JOIN artist
                         ON album.ArtistId = artist.ArtistId
-                        WHERE artist.Name = ?;
+                        WHERE artist.Name = ? ORDER BY track.Name;
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
@@ -111,7 +111,7 @@
                 default:
                     $query = <<<'SQL'
                         SELECT Name FROM track
-                        WHERE Name = ?;
+                        WHERE Name = ? ORDER BY track.Name;
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
