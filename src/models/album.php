@@ -38,7 +38,7 @@
                 case 'title':
                     try {
                         $query = <<<'SQL'
-                            SELECT * FROM album WHERE title = ?;
+                            SELECT * FROM album WHERE title = ? ORDER BY album.Title
                         SQL;
                         
                         $stmt = $this->pdo->prepare($query);
@@ -58,7 +58,7 @@
                             FROM album
                             LEFT JOIN artist 
                             ON album.ArtistId = artist.ArtistId 
-                            WHERE artist.Name = ?;
+                            WHERE artist.Name = ? ORDER BY album.Title
                         SQL;
                         
                         $stmt = $this->pdo->prepare($query);

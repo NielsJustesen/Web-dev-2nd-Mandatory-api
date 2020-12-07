@@ -36,7 +36,7 @@
             $query = <<<'SQL'
                 SELECT *
                 FROM artist
-                WHERE Name LIKE ? ORDER BY artist.Name;
+                WHERE Name LIKE ? ORDER BY artist.Name
             SQL;
 
             $stmt = $this->pdo->prepare($query);
@@ -49,7 +49,7 @@
         function List(){
 
             $query = <<<'SQL'
-                SELECT Name FROM artist ORDER BY artist.Name;
+                SELECT Name FROM artist ORDER BY artist.Name
             SQL;
 
             $stmt = $this->pdo->prepare($query);
