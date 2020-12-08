@@ -69,8 +69,16 @@
 
                     case 'PUT':
                         $trackData = (array) json_decode(file_get_contents('php://input'), TRUE);
-                        if ((count($urlPieces) == 4) && isset($trackData['name'])) {
-                            echo json_encode($track->Update($urlPieces[ID], $trackData['name']));
+                        if ((count($urlPieces) == 4) 
+                        && isset($trackData['name'])
+                        && isset($trackData['albumId']) 
+                        && isset($trackData['mediaTypeId']) 
+                        && isset($trackData['genreId'])
+                        && isset($trackData['composer']) 
+                        && isset($trackData['milliseconds']) 
+                        && isset($trackData['bytes']) 
+                        && isset($trackData['unitPrice'])) {
+                            echo json_encode($track->Update($urlPieces[ID], $trackData));
                         }
                         $track = null;
                         break;
@@ -155,8 +163,8 @@
                     
                     case 'PUT':
                         $albumData = (array) json_decode(file_get_contents('php://input'), TRUE);
-                        if ((count($urlPieces) == 4) && isset($albumData['title'])) {
-                            echo json_encode($album->Update($urlPieces[ID], $albumData['title']));
+                        if ((count($urlPieces) == 4) && isset($albumData['title']) && isset($albumData['artistId'])) {
+                            echo json_encode($album->Update($urlPieces[ID], $albumData));
                         }
                         $album = null;
                         break;

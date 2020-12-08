@@ -126,24 +126,28 @@
             }
         }
 
-        function Update($id, $name){
-            
-            if (trim($name, " ") == ""){
-                return;
-            }
-            
+        function Update($id, $trackData){
             try {
                 
                 $query =<<<'SQL'
-                    UPDATE Track SET Name = ? WHERE TrackId = ?
+                    UPDATE Track SET 
+                    Name = ?,
+                    AlbumId = ?,
+                    MediaTypeId = ?,
+                    GenreId = ?,
+                    Composer = ?,
+                    Milliseconds = ?,
+                    Bytes = ?,
+                    UnitPrice = ?
+                    WHERE TrackId = ?
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$name, $id]);
+                $stmt->execute([$trackData["name"],$trackData["albumId"],$trackData["mediaTypeId"],$trackData["genreId"],$trackData["composer"],$trackData["milliseconds"],$trackData["bytes"],$trackData["unitPrice"], $id]);
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 201", "Track name updated", "New name: ".$name];
+                    return ["Status: 201", "Track name updated"];
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

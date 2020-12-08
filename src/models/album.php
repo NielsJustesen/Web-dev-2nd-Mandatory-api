@@ -92,19 +92,22 @@
             }
         }
 
-        function Update($id, $title){
+        function Update($id, $albumData){
             try {
                 
                 $query =<<<'SQL'
-                    UPDATE Album SET Title = ? WHERE AlbumId = ?
+                    UPDATE Album SET
+                    Title = ?,
+                    ArtistId = ?
+                    WHERE AlbumId = ?
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$title, $id]);
+                $stmt->execute([$albumData["title"], $albumData["artistId"], $id]);
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 201", "Album title updated", "New title: ".$title];
+                    return ["Status: 201", "Album title updated"];
                 }
                 else {
                     return "Bad Request: 400";
