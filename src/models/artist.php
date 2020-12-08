@@ -27,8 +27,32 @@
 
         }
 
-        function Read(){
+        function Read($id){
+            try {
 
+                $query = <<<'SQL'
+                    SELECT *
+                    FROM artist
+                    WHERE ArtistId = ?
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+                $result = $stmt->fetch();
+
+                $this->disconnect();
+                if ($result)
+                {
+                    return $result;
+                }
+                else
+                {
+                    return "Did not find Artist";
+                }
+                
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
         }
 
         function BrowseArtists($name){

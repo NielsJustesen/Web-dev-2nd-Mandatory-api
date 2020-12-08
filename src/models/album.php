@@ -28,8 +28,33 @@
 
         }
 
-        function Read(){
+        function Read($id){
 
+            try {
+
+                $query = <<<'SQL'
+                    SELECT *
+                    FROM album
+                    WHERE AlbumId = ?
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+                $result = $stmt->fetch();
+
+                $this->disconnect();
+                if ($result)
+                {
+                    return $result;
+                }
+                else
+                {
+                    return "Did not find Album";
+                }
+
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
         }
 
         function BrowseAlbums($order, $name){

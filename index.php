@@ -47,6 +47,10 @@
                         if (isset($_GET["order"]) && isset($_GET["name"])) {
                             echo json_encode($track->BrowseTracks($_GET["order"], $_GET["name"]));
                         }
+                        else if (isset($_GET["id"]))
+                        {
+                            echo json_encode($track->Read($_GET["id"]));
+                        }
                         else {
                             formatError();
                         }
@@ -105,7 +109,11 @@
                         if (isset($_GET["name"])) {
                             echo json_encode($artist->BrowseArtists($_GET["name"]));
                         }
-                        else {
+                        else if (isset($_GET["id"])){
+                            echo json_encode($artist->Read($_GET["id"]));
+                        }
+                        else 
+                        {
                             echo json_encode($artist->List());
                         }
                         $artist = null;
@@ -147,6 +155,9 @@
                     case 'GET':
                         if (isset($_GET["order"]) && isset($_GET['name'])) {
                             echo json_encode($album->BrowseAlbums($_GET["order"], $_GET["name"]));
+                        } 
+                        else if (isset($_GET["id"])){
+                            echo json_encode($album->Read($_GET["id"]));
                         }
                         else {
                             echo json_encode($album->List());

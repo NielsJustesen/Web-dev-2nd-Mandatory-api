@@ -29,7 +29,31 @@
         }
 
         function Read($id){
+            try {
 
+                $query = <<<'SQL'
+                    SELECT *
+                    FROM track
+                    WHERE TrackId = ?
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+                $result = $stmt->fetch();
+
+                $this->disconnect();
+                if ($result)
+                {
+                    return $result;
+                }
+                else
+                {
+                    return "Did not find Track";
+                }
+                
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
         }
 
         function BrowseTracks($order, $name){
