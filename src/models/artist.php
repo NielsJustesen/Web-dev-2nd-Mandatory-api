@@ -16,7 +16,12 @@
                 $stmt->execute([$name]);
                 $result = $stmt->rowCount();
                 if ($result > 0) {
-                    return ["Message: Artist created", "status: 201", "Name: ".$name];
+                    $response = array("status"=>201, "message"=>"Artist created", "New Arist"=>$name);
+                    return $response;
+                }
+                else {
+                    $response = array("status"=>400, "message"=>"Artist was not created");
+                    return $response;
                 }
                 $this->disconnect();
                 
@@ -47,7 +52,8 @@
                 }
                 else
                 {
-                    return "Did not find Artist";
+                    $response = array("status"=>400, "message"=>"Did not find Artist");
+                    return $response;
                 }
                 
             } catch (\PDOException $e) {
@@ -109,7 +115,7 @@
 
         function Delete($id){
             try {
-
+                //SET INSIDE TRANSACTION
                 $query =<<<'SQL'
                     DELETE FROM Track WHERE ArtistId = ?
                 SQL;
@@ -133,10 +139,12 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 200", "Artist deleted"];
+                    $response = array("status"=>200, "message"=>"Artist deleted");
+                    return $response;
                 }
                 else {
-                    return "Bad Request: 400";
+                    $response = array("status"=>400, "message"=>"Artist was not deleted");
+                    return $response;
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

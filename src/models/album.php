@@ -18,7 +18,8 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0) {
-                    return ["Message: Album created", "status: 201", "Title: ".$title];
+                    $response = array("status"=>201, "message"=>"Album created", "New Album"=>$title);
+                    return $response;
                 }
                 
 
@@ -49,7 +50,8 @@
                 }
                 else
                 {
-                    return "Did not find Album";
+                    $response = array("status"=>400, "message"=>"Did not find Album");
+                    return $response;
                 }
 
             } catch (\PDOException $e) {
@@ -167,10 +169,12 @@
                 $this->pdo->commit();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 200", "Album deleted"];
+                    $response = arra("status"=>200, "message"=>"Album deleted");
+                    return $response;
                 }
                 else {
-                    return "Bad Request: 400";
+                    $response = arra("status"=>400, "message"=>"Album was not deleted");
+                    return $response;
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

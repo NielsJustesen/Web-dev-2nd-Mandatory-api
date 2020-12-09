@@ -49,7 +49,8 @@
                 }
                 else
                 {
-                    return "Did not find Track";
+                    $response = array("status"=>400, "message"=>"Did not find Track");
+                    return $response;
                 }
                 
             } catch (\PDOException $e) {
@@ -160,7 +161,6 @@
 
                     return $results;
                     break;
-
             }
         }
 
@@ -209,10 +209,12 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 200", "Track deleted"];
+                    $response = array("status"=>200, "message"=>"Track deleted");
+                    return $response;
                 }
                 else {
-                    return "Bad Request: 400";
+                    $response = array("status"=>400, "message"=>"track was not deleted");
+                    return $response;
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();
