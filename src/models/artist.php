@@ -73,7 +73,7 @@
         function List(){
 
             $query = <<<'SQL'
-                SELECT Name FROM artist ORDER BY artist.Name
+                SELECT * FROM artist ORDER BY artist.Name
             SQL;
 
             $stmt = $this->pdo->prepare($query);
@@ -95,10 +95,12 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 201", "Artist name updated", "New name: ".$name];
+                    $data = array("Status"=>201,  "New name"=>$name);
+                    return $data;
                 }
                 else {
-                    return "Bad Request: 400";
+                    $data = array("Status"=>400,  "message"=>"no artist was updated");
+                    return $data;
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

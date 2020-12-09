@@ -63,7 +63,7 @@
                 case 'title':
                     try {
                         $query = <<<'SQL'
-                            SELECT * FROM album WHERE title = ? ORDER BY album.Title
+                            SELECT artist.Name, album.* FROM album WHERE title = ? ORDER BY album.Title
                         SQL;
                         
                         $stmt = $this->pdo->prepare($query);
@@ -79,7 +79,7 @@
                 case 'artist':
                     try {
                         $query = <<<'SQL'
-                            SELECT *
+                            SELECT artist.Name, album.*
                             FROM album
                             LEFT JOIN artist 
                             ON album.ArtistId = artist.ArtistId 
@@ -101,7 +101,7 @@
         function List(){
             try {
                 $query = <<<'SQL'
-                    SELECT artist.Name, album.Title
+                    SELECT artist.Name, album.*
                     FROM album
                     LEFT JOIN artist ON album.ArtistId = artist.ArtistId ORDER BY artist.Name
                 SQL;
@@ -132,10 +132,12 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 201", "Album title updated"];
+                    $data = array("Status"=>201,  "New Title"=>$albumData["title"], "New ArtistId"=>$albumData["artistId"]);
+                    return $data;
                 }
                 else {
-                    return "Bad Request: 400";
+                    $data = array("Status"=>400,  "message"=>"no album was updated");
+                    return $data;
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

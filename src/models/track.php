@@ -19,7 +19,8 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0) {
-                    return ["Message: Track created", "status: 201", "Name: ".$name, "Composer: ".$composer, "Price: ".$price ];
+                    $response = array("status"=>"201","Message"=>"Track Created");
+                    return $response;
                 }
 
             } catch (\PDOException $e) {
@@ -56,13 +57,27 @@
             }
         }
 
+        function List(){
+            $query = <<<'SQL'
+                SELECT * FROM track
+            SQL;
+
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+
+            $this->disconnect();
+
+            return $results;
+        }
+
         function BrowseTracks($order, $name){
 
             switch($order){
 
                 case "album":
                     $query = <<<'SQL'
-                        SELECT track.TrackId, track.Name, track.AlbumId, track.Composer, track.Milliseconds, track.UnitPrice
+                        SELECT track.*
                         FROM track
                         LEFT JOIN album
                         ON track.AlbumId = album.AlbumId 
@@ -80,7 +95,7 @@
 
                 case "composer":
                     $query = <<<'SQL'
-                        SELECT track.TrackId, track.Name, track.AlbumId, track.Composer, track.Milliseconds, track.UnitPrice
+                        SELECT track.*
                         FROM track
                         WHERE Composer LIKE  ?
                     SQL;
@@ -96,7 +111,7 @@
 
                 case "genre":
                     $query = <<<'SQL'
-                        SELECT track.TrackId, track.Name, track.AlbumId, track.Composer, track.Milliseconds, track.UnitPrice
+                        SELECT track.*
                         FROM track
                         LEFT JOIN genre
                         ON track.GenreId = genre.GenreID
@@ -114,7 +129,7 @@
 
                 case "artist":
                     $query = <<<'SQL'
-                        SELECT track.TrackId, track.Name, track.AlbumId, track.Milliseconds, track.UnitPrice
+                        SELECT track.*
                         FROM track
                         LEFT JOIN album
                         ON track.AlbumId = album.AlbumId
@@ -134,8 +149,7 @@
 
                 default:
                     $query = <<<'SQL'
-                        SELECT Name FROM track
-                        WHERE Name = ?
+                        SELECT * FROM track
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
@@ -171,7 +185,12 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    return ["Status: 201", "Track name updated"];
+                    $data = array("Status"=>201,  "New name"=>$trackData["name"], "New albumId"=>$trackData["albumId"], "New mediatype"=>$trackData["mediaTypeId"], "New genreId"=>$trackData["genreId"], "New composer"=>$trackData["composer"], "New length"=>$trackData["milliseconds"], "New size"=>$trackData["bytes"], "New price"=>$trackData["unitPrice"]);
+                    return $data;
+                }
+                else {
+                    $data = array("Status"=>400,  "message"=>"no track was updated");
+                    return $data;
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

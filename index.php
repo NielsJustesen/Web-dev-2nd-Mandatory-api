@@ -52,7 +52,7 @@
                             echo json_encode($track->Read($_GET["id"]));
                         }
                         else {
-                            formatError();
+                            echo json_encode($track->List());
                         }
                         $track = null;
                         break;
