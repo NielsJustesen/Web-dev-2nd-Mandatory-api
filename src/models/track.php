@@ -58,18 +58,39 @@
             }
         }
 
+        function GetPrice($songName){
+            try {
+                $query = <<<'SQL'
+                    SELECT UnitPrice FROM track WHERE Name = ?
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$songName]);
+                $results = $stmt->fetch();
+                
+                $this->disconnect();
+                return $results;
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
+        }
+
         function List(){
-            $query = <<<'SQL'
-                SELECT * FROM track
-            SQL;
+            try {
+                $query = <<<'SQL'
+                    SELECT * FROM track
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+                
+                $this->disconnect();
+                return $results;
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
 
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute();
-            $results = $stmt->fetchAll();
-
-            $this->disconnect();
-
-            return $results;
         }
 
         function BrowseTracks($order, $name){
@@ -136,11 +157,11 @@
                         ON track.AlbumId = album.AlbumId
                         LEFT JOIN artist
                         ON album.ArtistId = artist.ArtistId
-                        WHERE artist.Name = ?
+                        WHERE artist.Name LIKE ?
                     SQL;
 
                     $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$name]);
+                    $stmt->execute(["%".$name."%"]);
                     $results = $stmt->fetchAll();
 
                     $this->disconnect();

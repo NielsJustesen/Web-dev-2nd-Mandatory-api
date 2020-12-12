@@ -1,6 +1,6 @@
 <?php
 
-    require_once('src/DB/connection.php');
+    require_once("src/DB/connection.php");
 
 
     class Album extends DB {
@@ -9,7 +9,7 @@
 
             try {
             
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     INSERT INTO album (Title, ArtistId) VALUES (?, ?)
                 SQL;
                 
@@ -33,7 +33,7 @@
 
             try {
 
-                $query = <<<'SQL'
+                $query = <<<"SQL"
                     SELECT *
                     FROM album
                     WHERE AlbumId = ?
@@ -62,14 +62,17 @@
         function BrowseAlbums($order, $name){
 
             switch ($order) {
-                case 'title':
+                case "title":
                     try {
-                        $query = <<<'SQL'
-                            SELECT artist.Name, album.* FROM album WHERE title = ? ORDER BY album.Title
+                        $query = <<<"SQL"
+                            SELECT artist.Name, album.*
+                            FROM album
+                            WHERE title LIKE ?
+                            ORDER BY album.Title
                         SQL;
                         
                         $stmt = $this->pdo->prepare($query);
-                        $stmt->execute([$name]);
+                        $stmt->execute(["%".$name."%"]);
                         $results = $stmt->fetch();
                         $this->disconnect();
                         return $results;
@@ -78,18 +81,19 @@
                     }
                     break;
                     
-                case 'artist':
+                case "artist":
                     try {
-                        $query = <<<'SQL'
+                        $query = <<<"SQL"
                             SELECT artist.Name, album.*
                             FROM album
                             LEFT JOIN artist 
                             ON album.ArtistId = artist.ArtistId 
-                            WHERE artist.Name = ? ORDER BY album.Title
+                            WHERE artist.Name LIKE ?
+                            ORDER BY album.Title
                         SQL;
                         
                         $stmt = $this->pdo->prepare($query);
-                        $stmt->execute([$name]);
+                        $stmt->execute(["%".$name."%"]);
                         $results = $stmt->fetchAll();
                         $this->disconnect();
                         return $results;
@@ -102,7 +106,7 @@
 
         function List(){
             try {
-                $query = <<<'SQL'
+                $query = <<<"SQL"
                     SELECT artist.Name, album.*
                     FROM album
                     LEFT JOIN artist ON album.ArtistId = artist.ArtistId ORDER BY artist.Name
@@ -122,7 +126,7 @@
         function Update($id, $albumData){
             try {
                 
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     UPDATE Album SET
                     Title = ?,
                     ArtistId = ?
@@ -150,7 +154,7 @@
             try {
                 $this->pdo->beginTransaction();
 
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     DELETE FROM track WHERE AlbumId = ?
                 SQL;
 
@@ -158,7 +162,7 @@
                 $stmt->execute([$id]);
                 $result = $stmt->rowCount();
 
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     DELETE FROM album WHERE AlbumId = ?
                 SQL;
             
@@ -169,11 +173,11 @@
                 $this->pdo->commit();
                 $this->disconnect();
                 if ($result > 0){
-                    $response = arra("status"=>200, "message"=>"Album deleted");
+                    $response = array("status"=>200, "message"=>"Album deleted");
                     return $response;
                 }
                 else {
-                    $response = arra("status"=>400, "message"=>"Album was not deleted");
+                    $response = array("status"=>400, "message"=>"Album was not deleted");
                     return $response;
                 }
             } catch (\PDOException $e) {
