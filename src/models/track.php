@@ -61,7 +61,7 @@
         function GetPrice($songName){
             try {
                 $query = <<<'SQL'
-                    SELECT UnitPrice FROM track WHERE Name = ?
+                    SELECT UnitPrice, TrackId FROM track WHERE Name = ?
                 SQL;
                 
                 $stmt = $this->pdo->prepare($query);
