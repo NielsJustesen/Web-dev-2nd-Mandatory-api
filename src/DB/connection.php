@@ -5,19 +5,15 @@
         protected $pdo;
         
         public function __construct() {
-            // Local DB
-            $server = "localhost";
-            $dbName = "chinook_abridged";
-            $user = "root";
-            $pwd = "";
 
-            // AWS db
-            // $server = "dbfilms.cqnxkgorpvhz.us-east-1.rds.amazonaws.com";
-            // $dbName = "films";
-            // $user = "adminfilms";
-            // $pwd = "technology";
+            // AWS db -h chinookabridgeddb.cxypwdfo5x68.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+            $server = "chinookabridgeddb.cxypwdfo5x68.us-east-1.rds.amazonaws.com";
+            $port = 3306;
+            $dbName = "chinook_abridged";
+            $user = "admin";
+            $pwd = "chinookadmin";
             
-            $dsn = "mysql:host=".$server."; dbname=".$dbName."; charset=utf8";
+            $dsn = "mysql:host=".$server."; port=".$port."; dbname=".$dbName."; charset=utf8";
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
