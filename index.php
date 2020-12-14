@@ -1,6 +1,4 @@
 <?php
-    
-
     define("ENTITY", 2);
     define("ID", 3);
     define("MAX_PIECES", 4);
@@ -10,9 +8,6 @@
     define("ENTITY_CUSTOMERS", "customers");
     define("ENTITY_INVOICELINES", "invoicelines");
     define("ENTITY_INVOICES", "invoices");
-    define("ENTITY_LOGIN", "login");
-
-
 
     $url = strtok($_SERVER["REQUEST_URI"], "?");    
 
@@ -207,7 +202,6 @@
                         }
                         $customer = null;
                         break;
-                        
 
                     case "POST":
                         if(isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["password"]) && isset($_POST["company"]) && isset($_POST["address"]) && isset($_POST["city"]) && isset($_POST["state"]) && isset($_POST["country"]) && isset($_POST["postalCode"]) && isset($_POST["phone"]) && isset($_POST["fax"]) && isset($_POST["email"])){
@@ -218,7 +212,6 @@
                         }
                         $customer = null;
                         break;
-
                     
                     case "PUT":
                         $customerData = (array) json_decode(file_get_contents("php://input"), TRUE);
@@ -233,15 +226,6 @@
                         }
                         $customer = null;
                         break;
-
-                    case "DELETE":
-                        if ($pieces < MAX_PIECES) {
-                            echo formatError();
-                        } else {
-                            echo json_encode($customer->Delete($urlPieces[ID]));
-                        }
-                        $customer = null;
-                        break;
                 }
                 break;
             case ENTITY_INVOICES:
@@ -251,29 +235,10 @@
 
                 switch ($verb) 
                 {
-                    case "GET":
-                        $invoice = null;
-                        break;
-                        
-
                     case "POST":
                         if(isset($_POST["customerId"]) && isset($_POST["billindAddress"]) && isset($_POST["billingCity"]) && isset($_POST["billingState"]) && isset($_POST["billingCountry"]) && isset($_POST["billingPostalCode"]) && isset($_POST["total"])){
                             echo json_encode($invoice->Create($_POST));
                         }
-                        break;
-
-                    
-                    case "PUT":
-                        $invoice = null;
-                        break;
-
-                    case "DELETE":
-                        if ($pieces < MAX_PIECES) {
-                            echo formatError();
-                        } else {
-                            echo json_encode($invoice->Delete($urlPieces[ID]));
-                        }
-                        $invoice = null;
                         break;
                 }
                 break;
@@ -284,45 +249,11 @@
 
                 switch ($verb) 
                 {
-                    case "GET":
-                        $invoiceline = null;
-                        break;
-                        
-
                     case "POST":
                         if(isset($_POST["invoiceId"]) && isset($_POST["quantity"]) && isset($_POST["trackId"]) && isset($_POST["unitPrice"])){
                             echo json_encode($invoiceline->Create($_POST));
                         }
                         $invoiceline = null;
-                        break;
-
-                    
-                    case "PUT":
-                        $invoiceline = null;
-                        break;
-
-                    case "DELETE":
-                        if ($pieces < MAX_PIECES) {
-                            echo formatError();
-                        } else {
-                            echo json_encode($invoiceline->Delete($urlPieces[ID]));
-                        }
-                        $invoiceline = null;
-                        break;
-                }
-
-                break;
-
-            case ENTITY_LOGIN:
-                require_once("src/models/login.php");
-                $login = new Login();
-                $verb = $_SERVER["REQUEST_METHOD"];
-                switch($verb){
-                    case "POST":
-                        if(isset($_POST["customerId"]) && isset($_POST["email"]) && isset($_POST["enteredPassword"])){
-                            echo json_encode($login->LoginCustomer($_POST));
-                        }
-                        $login = null;
                         break;
                 }
                 break;
