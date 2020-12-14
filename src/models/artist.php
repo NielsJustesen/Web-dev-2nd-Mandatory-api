@@ -62,31 +62,37 @@
         }
 
         function BrowseArtists($name){
-
-            $query = <<<"SQL"
-                SELECT *
-                FROM artist
-                WHERE Name LIKE ? ORDER BY artist.Name
-            SQL;
-
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute(["%".$name."%"]);
-            $results = $stmt->fetchAll();
-            $this->disconnect();
-            return $results;
+            try {
+                $query = <<<"SQL"
+                    SELECT *
+                    FROM artist
+                    WHERE Name LIKE ? ORDER BY artist.Name
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute(["%".$name."%"]);
+                $results = $stmt->fetchAll();
+                $this->disconnect();
+                return $results;
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
         }
 
         function List(){
-
-            $query = <<<"SQL"
-                SELECT * FROM artist ORDER BY artist.Name
-            SQL;
-
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute();
-            $results = $stmt->fetchAll();
-            $this->disconnect();
-            return $results;
+            try {
+                $query = <<<"SQL"
+                    SELECT * FROM artist ORDER BY artist.Name
+                SQL;
+                
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+                $this->disconnect();
+                return $results;
+            } catch (\PDOException $e) {
+                return $e->getMessage();
+            }
         }
 
         function Update($id, $name){

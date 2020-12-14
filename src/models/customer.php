@@ -24,17 +24,10 @@
                 else{
                     return "Customer created successfully";
                 }
-
             } catch (\PDOException $e) {
                 return $e->getMessage();
             }
-
-
         }
-
-        
-
-        
 
         function Read($email){
 
@@ -135,17 +128,7 @@
                         return $e->getMessage();
                     }
                     break;
-                
-                default:
-                    # code...
-                    break;
             }
-            
-        }
-
-        function Delete(){
-            
         }
     }
-
 ?>

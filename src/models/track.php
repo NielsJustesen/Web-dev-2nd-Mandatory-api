@@ -1,6 +1,6 @@
 <?php
 
-    require_once('src/DB/connection.php');
+    require_once("src/DB/connection.php");
 
     class Track extends DB {
 
@@ -8,7 +8,7 @@
 
             try {
             
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     INSERT INTO track
                     (Name, AlbumId, MediaTypeId, GenreId, Composer, Bytes, Milliseconds, UnitPrice)
                     VALUES (?,?,?,?,?,?,?,?)
@@ -19,7 +19,7 @@
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0) {
-                    $response = array("status"=>"201","Message"=>"Track Created");
+                    $response = array("status"=>201,"message"=>"Track Created");
                     return $response;
                 }
 
@@ -32,7 +32,7 @@
         function Read($id){
             try {
 
-                $query = <<<'SQL'
+                $query = <<<"SQL"
                     SELECT *
                     FROM track
                     WHERE TrackId = ?
@@ -60,7 +60,7 @@
 
         function GetPrice($songName){
             try {
-                $query = <<<'SQL'
+                $query = <<<"SQL"
                     SELECT UnitPrice, TrackId FROM track WHERE Name = ?
                 SQL;
                 
@@ -77,7 +77,7 @@
 
         function List(){
             try {
-                $query = <<<'SQL'
+                $query = <<<"SQL"
                     SELECT * FROM track
                 SQL;
                 
@@ -98,89 +98,109 @@
             switch($order){
 
                 case "album":
-                    $query = <<<'SQL'
-                        SELECT track.*
-                        FROM track
-                        LEFT JOIN album
-                        ON track.AlbumId = album.AlbumId 
-                        WHERE album.Title = ?
-                    SQL;
-
-                    $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$name]);
-                    $results = $stmt->fetchAll();
-
-                    $this->disconnect();
-
-                    return $results;
+                    try {
+                        $query = <<<"SQL"
+                            SELECT track.*
+                            FROM track
+                            LEFT JOIN album
+                            ON track.AlbumId = album.AlbumId 
+                            WHERE album.Title = ?
+                        SQL;
+                        
+                        $stmt = $this->pdo->prepare($query);
+                        $stmt->execute([$name]);
+                        $results = $stmt->fetchAll();
+                        
+                        $this->disconnect();
+                        
+                        return $results;
+                    } catch (\PDOException $e) {
+                        return $e->getMessage();
+                    }
                     break;
 
                 case "composer":
-                    $query = <<<'SQL'
-                        SELECT track.*
-                        FROM track
-                        WHERE Composer LIKE  ?
-                    SQL;
-
-                    $stmt = $this->pdo->prepare($query);
-                    $stmt->execute(["%".$name."%"]);
-                    $results = $stmt->fetchAll();
-
-                    $this->disconnect();
-
-                    return $results;
+                    try {
+                        $query = <<<"SQL"
+                            SELECT track.*
+                            FROM track
+                            WHERE Composer LIKE  ?
+                        SQL;
+                        
+                        $stmt = $this->pdo->prepare($query);
+                        $stmt->execute(["%".$name."%"]);
+                        $results = $stmt->fetchAll();
+                        
+                        $this->disconnect();
+                        
+                        return $results;
+                    } catch (\PDOException $e) {
+                        return $e->getMessage();
+                    }
                     break;
 
                 case "genre":
-                    $query = <<<'SQL'
-                        SELECT track.*
-                        FROM track
-                        LEFT JOIN genre
-                        ON track.GenreId = genre.GenreID
-                        WHERE genre.Name = ?
-                    SQL;
-
-                    $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$name]);
-                    $results = $stmt->fetchAll();
-
-                    $this->disconnect();
-
-                    return $results;
+                    try {
+                        $query = <<<"SQL"
+                            SELECT track.*
+                            FROM track
+                            LEFT JOIN genre
+                            ON track.GenreId = genre.GenreID
+                            WHERE genre.Name = ?
+                        SQL;
+                        
+                        $stmt = $this->pdo->prepare($query);
+                        $stmt->execute([$name]);
+                        $results = $stmt->fetchAll();
+                        
+                        $this->disconnect();
+                        
+                        return $results;
+                    } catch (\PDOException $e) {
+                        return $e->getMessage();
+                    }
                     break;
 
                 case "artist":
-                    $query = <<<'SQL'
-                        SELECT track.*
-                        FROM track
-                        LEFT JOIN album
-                        ON track.AlbumId = album.AlbumId
-                        LEFT JOIN artist
-                        ON album.ArtistId = artist.ArtistId
-                        WHERE artist.Name LIKE ?
-                    SQL;
-
-                    $stmt = $this->pdo->prepare($query);
-                    $stmt->execute(["%".$name."%"]);
-                    $results = $stmt->fetchAll();
-
-                    $this->disconnect();
-
-                    return $results;
+                    try {
+                        $query = <<<"SQL"
+                            SELECT track.*
+                            FROM track
+                            LEFT JOIN album
+                            ON track.AlbumId = album.AlbumId
+                            LEFT JOIN artist
+                            ON album.ArtistId = artist.ArtistId
+                            WHERE artist.Name LIKE ?
+                        SQL;
+                        
+                        $stmt = $this->pdo->prepare($query);
+                        $stmt->execute(["%".$name."%"]);
+                        $results = $stmt->fetchAll();
+                        
+                        $this->disconnect();
+                        
+                        return $results;
+                    } catch (\PDOException $e) {
+                        return $e->getMessage();
+                    }
                     break;
 
                 default:
-                    $query = <<<'SQL'
-                        SELECT * FROM track
-                    SQL;
-
-                    $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$name]);
-                    $results = $stmt->fetchAll();
-
-                    $this->disconnect();
-
-                    return $results;
+                    try {
+                        $query = <<<"SQL"
+                            SELECT * FROM track
+                        SQL;
+                        
+                        $stmt = $this->pdo->prepare($query);
+                        $stmt->execute([$name]);
+                        $results = $stmt->fetchAll();
+                        
+                        $this->disconnect();
+                        
+                        return $results;
+                    } catch (\PDOException $e) {
+                        return $e->getMessage();
+                    }
                     break;
             }
         }
@@ -188,7 +208,7 @@
         function Update($id, $trackData){
             try {
                 
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     UPDATE Track SET 
                     Name = ?,
                     AlbumId = ?,
@@ -221,7 +241,7 @@
         function Delete($id){
             try {
                 
-                $query =<<<'SQL'
+                $query =<<<"SQL"
                     DELETE FROM Track WHERE TrackId = ?
                 SQL;
             
@@ -242,6 +262,4 @@
             }
         }
     }
-
-
 ?>

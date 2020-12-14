@@ -5,7 +5,6 @@
     class Invoice extends DB {
 
         function Create($data){
-
             try {
                 $this->pdo->beginTransaction();
                 
@@ -43,20 +42,6 @@
             } catch (\PDOException $e) {
                 return $e->getMessage();
             }
-
-        }
-
-        function Read(){
-            
-        }
-
-        function Update(){
-            
-        }
-
-        function Delete(){
-            
         }
     }
-    
 ?>

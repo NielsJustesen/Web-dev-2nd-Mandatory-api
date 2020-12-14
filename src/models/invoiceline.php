@@ -27,18 +27,5 @@
                 return $e->getMessage();
             }
         }
-
-        function Read(){
-            
-        }
-
-        function Update(){
-            
-        }
-
-        function Delete(){
-            
-        }
     }
-
 ?>
