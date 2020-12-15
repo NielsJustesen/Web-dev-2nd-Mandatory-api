@@ -131,20 +131,20 @@
                 $result = $stmt->fetch();
 
                 $query =<<<"SQL"
-                    DELETE FROM Track WHERE AlbumId = ?
+                    DELETE FROM track WHERE AlbumId = ?
                 SQL;
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$result["AlbumId"]]);
 
                 $query =<<<"SQL"
-                    DELETE FROM Album WHERE ArtistId = ?
+                    DELETE FROM album WHERE ArtistId = ?
                 SQL;
 
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$id]);
 
                 $query =<<<"SQL"
-                    DELETE FROM Artist WHERE ArtistId = ?
+                    DELETE FROM artist WHERE ArtistId = ?
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
