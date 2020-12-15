@@ -6,7 +6,7 @@
         
         public function __construct() {
 
-            // AWS db -h chinookabridgeddb.cxypwdfo5x68.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+            //mysql -h chinookabridgeddb.cxypwdfo5x68.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
             $server = "chinookabridgeddb.cxypwdfo5x68.us-east-1.rds.amazonaws.com";
             $port = 3306;
             $dbName = "chinook_abridged";

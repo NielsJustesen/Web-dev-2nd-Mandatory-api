@@ -209,7 +209,7 @@
             try {
                 
                 $query =<<<"SQL"
-                    UPDATE Track SET 
+                    UPDATE track SET 
                     Name = ?,
                     AlbumId = ?,
                     MediaTypeId = ?,
@@ -242,7 +242,7 @@
             try {
                 
                 $query =<<<"SQL"
-                    DELETE FROM Track WHERE TrackId = ?
+                    DELETE FROM track WHERE TrackId = ?
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
