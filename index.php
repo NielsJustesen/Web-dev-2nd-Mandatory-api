@@ -1,9 +1,5 @@
 <?php
-    // header("Access-Control-Allow-Headers")
-    // header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE");
-    // header("Access-Control-Allow-Origin: *");
-    // header("Access-Control-Allow-Credentials: true");
-
+    // Credit: For CORS Acces https://stackoverflow.com/questions/51504231/php-api-rest-does-not-accept-cors-requests-even-using-header-access-control-al/51504293
     if(isset($_SERVER["HTTP_ORIGIN"]))
     {
         // You can decide if the origin in $_SERVER['HTTP_ORIGIN'] is something you want to allow, or as we do here, just allow all
