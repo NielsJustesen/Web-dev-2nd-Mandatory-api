@@ -273,15 +273,15 @@
                         }
                         //Instead of PUT
                         else if(isset($_POST["customerId"]) && isset($_POST["password"])){
-                            echo json_encode($customer->Update("password", $customerData));
+                            echo json_encode($customer->Update("password", $_POST));
                         }
                         //Instead of PUT
                         else if (isset($_POST["customerId"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["email"]) && isset($_POST["company"]) && isset($_POST["phone"]) && isset($_POST["fax"])){
-                            echo json_encode($customer->Update("profile", $customerData));
+                            echo json_encode($customer->Update("profile", $_POST));
                         }
                         //Instead of PUT
                         else if (isset($_POST["customerId"]) && isset($_POST["address"]) && isset($_POST["city"]) && isset($_POST["state"]) && isset($_POST["country"]) && isset($_POST["postalCode"])){
-                            echo json_encode($customer->Update("shipping", $customerData));
+                            echo json_encode($customer->Update("shipping", $_POST));
                         }
                         else {
                             formatError();
@@ -330,7 +330,7 @@
         }
     
     function APIDescription() {
-        header("Location: http://chinookabridgedapi-env.eba-nh3f5aui.us-east-1.elasticbeanstalk.com");
+        header("Location: https://documenter.getpostman.com/view/10358764/TVsoJBTX");
     }
 
     function formatError() {

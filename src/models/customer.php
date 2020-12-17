@@ -59,7 +59,7 @@
                         $stmt = $this->pdo->prepare($qeury);
                         $stmt->execute([$pwd, $data["customerId"]]);
                         $result = $stmt->rowCount();
-                        
+
                         if($result > 0){
                             return "password updated";
                         }

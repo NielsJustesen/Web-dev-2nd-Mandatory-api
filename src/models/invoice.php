@@ -19,7 +19,7 @@
                 $invoiceId = $this->pdo->lastInsertId();
 
                 echo print_r($data["invoiceLines"]);
-                foreach ($data["invoiceLines"] as $key => $value) {
+                foreach ($data["invoiceLines"] as $value) {
                     $query =<<<"SQL"
                         INSERT INTO invoiceline (InvoiceId, Quantity, TrackId, UnitPrice)
                         VALUES (?,?,?,?)
