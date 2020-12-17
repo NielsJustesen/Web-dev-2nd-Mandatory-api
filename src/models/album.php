@@ -127,7 +127,7 @@
             try {
                 
                 $query =<<<"SQL"
-                    UPDATE Album SET
+                    UPDATE album SET
                     Title = ?,
                     ArtistId = ?
                     WHERE AlbumId = ?

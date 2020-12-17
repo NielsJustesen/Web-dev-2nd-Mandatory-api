@@ -99,7 +99,7 @@
             try {
                 
                 $query =<<<"SQL"
-                    UPDATE Artist SET Name = ? WHERE ArtistId = ?
+                    UPDATE artist SET Name = ? WHERE ArtistId = ?
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
