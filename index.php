@@ -81,9 +81,6 @@
                         {
                             echo json_encode($track->List());
                         }
-                        else {
-                            formatError();
-                        }
                         $track = null;
                         break;
                     
@@ -163,9 +160,6 @@
                         {
                             echo json_encode($artist->List());
                         }
-                        else {
-                            formatError();
-                        }
                         $artist = null;
 
                         break;
@@ -198,9 +192,6 @@
                         } else {
                             echo json_encode($artist->Delete($urlPieces[ID]));
                         }
-                        else {
-                            formatError();
-                        }
                         $artist = null;
                         break;
                         
@@ -222,9 +213,6 @@
                         }
                         else {
                             echo json_encode($album->List());
-                        }
-                        else {
-                            formatError();
                         }
                         $album = null;
                         break;
@@ -342,7 +330,7 @@
         }
     
     function APIDescription() {
-        header("Location: http://chinookabridgedapi-env.eba-nh3f5aui.us-east-1.elasticbeanstalk.com/")
+        header("Location: http://chinookabridgedapi-env.eba-nh3f5aui.us-east-1.elasticbeanstalk.com");
     }
 
     function formatError() {
