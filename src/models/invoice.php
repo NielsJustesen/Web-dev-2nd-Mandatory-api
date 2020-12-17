@@ -15,31 +15,35 @@
                 $now = date("Y-m-d H:i:s");
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$data["customerId"], $now, $data["billindAddress"], $data["billingCity"], $data["billingState"], $data["billingCountry"], $data["billingPostalCode"], $data["total"]]);
-                $result = $stmt->rowCount();
+                
+                $invoiceId = $this->pdo->lastInsertId();
+
+                echo print_r($data["invoiceLines"]);
+                foreach ($data["invoiceLines"] as $key => $value) {
+                    $query =<<<"SQL"
+                        INSERT INTO invoiceline (InvoiceId, Quantity, TrackId, UnitPrice)
+                        VALUES (?,?,?,?)
+                    SQL;
+                    $lineStmt = $this->pdo->prepare($query);
+                    $lineStmt->execute([$invoiceId, $value["quantity"], $value["trackId"], $value["unitPrice"]]);
+                }
+                
+
+                $result = $stmt.fetch();
+
+                $this->pdo->commit();
+                $this->disconnect();
+
 
                 if($result < 1){
                     return "failed creating invoice";
                 }
-                else{
-                    $query =<<<"SQL"
-                        SELECT InvoiceId FROM invoice WHERE InvoiceDate = ?
-                    SQL;
-                    $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$now]);
-                    $result = $stmt->fetch();
-                    $this->pdo->commit();
-                    $this->disconnect();
-
-                    if($result){
-                        return $result;
-                    }
-                    else
-                    {
-                        return "failed to get invoice";
-                    }
+                else {
+                    return "invoice created!";
                 }
 
             } catch (\PDOException $e) {
+                $this->pdo->rollBack();
                 return $e->getMessage();
             }
         }

@@ -205,7 +205,7 @@
             }
         }
 
-        function Update($id, $trackData){
+        function Update($trackData){
             try {
                 
                 $query =<<<"SQL"
@@ -222,16 +222,15 @@
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$trackData["name"],$trackData["albumId"],$trackData["mediaTypeId"],$trackData["genreId"],$trackData["composer"],$trackData["milliseconds"],$trackData["bytes"],$trackData["unitPrice"], $id]);
+                $stmt->execute([$trackData["name"],$trackData["albumId"],$trackData["mediaTypeId"],$trackData["genreId"],$trackData["composer"],$trackData["milliseconds"],$trackData["bytes"],$trackData["unitPrice"], $trackData["trackId"]]);
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    $data = array("Status"=>201,  "New name"=>$trackData["name"], "New albumId"=>$trackData["albumId"], "New mediatype"=>$trackData["mediaTypeId"], "New genreId"=>$trackData["genreId"], "New composer"=>$trackData["composer"], "New length"=>$trackData["milliseconds"], "New size"=>$trackData["bytes"], "New price"=>$trackData["unitPrice"]);
-                    return $data;
+                    echo "Track updated";
+                    return array("Status"=>201,  "New name"=>$trackData["name"], "New albumId"=>$trackData["albumId"], "New mediatype"=>$trackData["mediaTypeId"], "New genreId"=>$trackData["genreId"], "New composer"=>$trackData["composer"], "New length"=>$trackData["milliseconds"], "New size"=>$trackData["bytes"], "New price"=>$trackData["unitPrice"]);
                 }
                 else {
-                    $data = array("Status"=>400,  "message"=>"no track was updated");
-                    return $data;
+                    return array("Status"=>400,  "message"=>"no track was updated");
                 }
             } catch (\PDOException $e) {
                 return $e->getMessage();

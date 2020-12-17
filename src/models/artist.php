@@ -95,7 +95,7 @@
             }
         }
 
-        function Update($id, $name){
+        function Update($artistData){
             try {
                 
                 $query =<<<"SQL"
@@ -103,11 +103,11 @@
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$name, $id]);
+                $stmt->execute([$artistData["name"], $artistData["artistId"]]);
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
-                    $data = array("Status"=>201,  "New name"=>$name);
+                    $data = array("Status"=>201,  "New name"=>$artistData["name"]);
                     return $data;
                 }
                 else {
@@ -153,14 +153,13 @@
                 $this->pdo->commit();
                 $this->disconnect();
                 if ($result > 0){
-                    $response = array("status"=>200, "message"=>"Artist deleted");
-                    return $response;
+                    return array("status"=>200, "message"=>"Artist deleted and all references");
                 }
                 else {
-                    $response = array("status"=>400, "message"=>"Artist was not deleted");
-                    return $response;
+                    return array("status"=>400, "message"=>"Artist was not deleted");
                 }
             } catch (\PDOException $e) {
+                $this->pdo->rollBack();
                 return $e->getMessage();
             }
         }

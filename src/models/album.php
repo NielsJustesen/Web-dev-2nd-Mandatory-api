@@ -123,7 +123,7 @@
             }
         }
 
-        function Update($id, $albumData){
+        function Update($albumData){
             try {
                 
                 $query =<<<"SQL"
@@ -134,7 +134,7 @@
                 SQL;
             
                 $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$albumData["title"], $albumData["artistId"], $id]);
+                $stmt->execute([$albumData["title"], $albumData["artistId"], $albumData["albumId"]]);
                 $result = $stmt->rowCount();
                 $this->disconnect();
                 if ($result > 0){
