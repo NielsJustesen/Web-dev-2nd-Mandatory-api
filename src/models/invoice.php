@@ -18,7 +18,6 @@
                 
                 $invoiceId = $this->pdo->lastInsertId();
 
-                echo print_r($data["invoiceLines"]);
                 foreach ($data["invoiceLines"] as $value) {
                     $query =<<<"SQL"
                         INSERT INTO invoiceline (InvoiceId, Quantity, TrackId, UnitPrice)
@@ -27,16 +26,15 @@
                     $lineStmt = $this->pdo->prepare($query);
                     $lineStmt->execute([$invoiceId, $value["quantity"], $value["trackId"], $value["unitPrice"]]);
                 }
-                
 
-                $result = $stmt.fetch();
+                $result = $stmt->rowCount();
 
                 $this->pdo->commit();
                 $this->disconnect();
 
 
                 if($result < 1){
-                    return "failed creating invoice";
+                    return "failed creating invoice!";
                 }
                 else {
                     return "invoice created!";
